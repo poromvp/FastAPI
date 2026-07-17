@@ -1,6 +1,10 @@
 from fastapi import FastAPI
+
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"message": "Xin chào!"}
+@app.get("/shipment")
+def get_shipment():
+    return {
+        "message": "Xin chào!",
+        "status": "intransit"    
+    }
