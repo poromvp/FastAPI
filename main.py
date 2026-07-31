@@ -21,14 +21,20 @@ async def put():
         "message" : "hello from the put route"
     }
 
-@app.get("/items")
-async def list_items():
+@app.get("/users")
+async def list_users():
     return {
-        "message" : "list items route"
+        "message" : "list users route"
     }
 
-@app.get("/items/{items_id}")
-async def get_items(items_id: int):
+@app.get("/users/me")
+async def get_current_user(): 
     return {
-        "item_id" : items_id
+        "message" : "this is the current user"
+    }
+
+@app.get("/users/{users_id}")
+async def get_users(users_id: str): 
+    return {
+        "users_id" : users_id
     }
