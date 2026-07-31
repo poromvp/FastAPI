@@ -28,7 +28,7 @@ async def list_items():
     }
 
 @app.get("/items/{items_id}")
-async def get_items(items_id):
+async def get_items(items_id: int):
     return {
-        "item_id" : "items_id"
+        "item_id" : items_id
     }
