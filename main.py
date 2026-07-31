@@ -54,4 +54,7 @@ async def get_food(food_name: FoodEnum):
             "message": "you are still healthy, but like sweeet things",
         }
 
-    
+    return{
+        "food_name" : food_name,
+        "message" : "i like chocolate milk"
+    }
