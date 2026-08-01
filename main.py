@@ -66,7 +66,10 @@ async def list_items(skip: int = 0, limit: int = 10):
 
 
 @app.get("/items/{item_id}")
-async def get_item(item_id: str = "haha", q: str | None = None):
+async def get_item(item_id: str = "haha", q: str | None = None, short: bool = False):
+    item = {"item_id": item_id}
     if q:
-        return {"item_id": item_id, "q": q}
-    return {"item_id": item_id}
+       item.update({"q": q})
+    if not short:
+        item.update({"description" : "aaaaaaaaaaaaaaaaa"})
+    return item
