@@ -31,3 +31,7 @@ async def get_items(min_price: float = 0.0, max_price: float | None = None):
         "max_price": max_price,
         "message": "Đã lọc sản phẩm theo giá.",
     }
+
+@app.get("/authors/{author_id}/posts/")
+async def get_posts_by_author(author_id:int, published_only: bool = True):
+    return {"author_id": author_id, "published_only": published_only}
