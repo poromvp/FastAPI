@@ -35,3 +35,9 @@ async def get_items(min_price: float = 0.0, max_price: float | None = None):
 @app.get("/authors/{author_id}/posts/")
 async def get_posts_by_author(author_id:int, published_only: bool = True):
     return {"author_id": author_id, "published_only": published_only}
+
+@app.get("/users/{user_id}/orders/{order_id}")
+async def get_orders_users_by_id(user_id:int, order_id:int, show_details:bool=False):
+    if show_details:
+        return {"user_id": user_id, "order_id": order_id,"details": "Áo thun đỏ, size M"}
+    return {"user_id": user_id, "order_id": order_id}
