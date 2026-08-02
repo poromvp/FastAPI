@@ -13,3 +13,12 @@ async def get_employees_by_id(emp_id: int):
 @app.get("/categories/{category_name}/posts")
 async def get_category_by_posts(category_name:str):
     return {"category": category_name, "message": "Danh sách bài viết của chuyên mục"}
+
+@app.get("/users/me")
+async def get_current_user():
+    return {"user_id": "current_user", "role": "admin"}
+
+@app.get("/users/{user_id}")
+async def get_user_by_id(user_id:str):
+    return {"user_id" : user_id}
+
