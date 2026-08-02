@@ -42,8 +42,19 @@ async def get_orders_users_by_id(user_id:int, order_id:int, show_details:bool=Fa
         return {"user_id": user_id, "order_id": order_id,"details": "Áo thun đỏ, size M"}
     return {"user_id": user_id, "order_id": order_id}
 
-@app.get("/departments/{dept_id}/employees/")
+@app.get("/departments/{dept_id}/employees")
 async def get_employees_by_dept_id(dept_id:int, role:str | None = None, limit:int = 10):
     if role == "manager":
         return f"Danh sách manager của phòng ban X và limit là {limit}"
     return f"Danh sách toàn bộ nhân viên phòng ban X và limit là {limit}"
+
+@app.get("/hotels/{hotel_id}/rooms/{room_type}")
+async def find_empty_room(hotel_id:int, room_type:str, checkin_date:str, checkout_date:str, guests:int = 1, include_breakfast:bool = False):
+    return {
+        "hotel_id": hotel_id,
+        "room_type": room_type,
+        "checkin_date": checkin_date,
+        "checkout_date": checkout_date,
+        "guests": guests,
+        "include_breakfast": include_breakfast
+    }
