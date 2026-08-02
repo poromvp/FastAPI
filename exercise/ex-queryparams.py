@@ -41,3 +41,9 @@ async def get_orders_users_by_id(user_id:int, order_id:int, show_details:bool=Fa
     if show_details:
         return {"user_id": user_id, "order_id": order_id,"details": "Áo thun đỏ, size M"}
     return {"user_id": user_id, "order_id": order_id}
+
+@app.get("/departments/{dept_id}/employees/")
+async def get_employees_by_dept_id(dept_id:int, role:str | None = None, limit:int = 10):
+    if role == "manager":
+        return f"Danh sách manager của phòng ban X và limit là {limit}"
+    return f"Danh sách toàn bộ nhân viên phòng ban X và limit là {limit}"
