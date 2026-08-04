@@ -14,3 +14,13 @@ async def create_orders_for_user(user_id: int, order: Order, discount_code: str 
         order_dict.update({"discount_code": discount_code})
     return order_dict
 
+class ProductInfo(BaseModel):
+    name: str
+    price: float
+
+@app.put("/products/{product_id}")
+async def update_product(product_id: int, product: ProductInfo, force_update:bool = False):
+    product_dict = product.model_dump()
+    if force_update:
+        product_dict.update({"name" : "Đã cập nhật"})
+    return product_dict
