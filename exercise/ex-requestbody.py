@@ -73,3 +73,14 @@ class TrackingInfo(BaseModel):
 @app.patch("/deliveries/{tracking_number}")
 async def update_tracking(tracking_number:int, tracking:TrackingInfo, notify_user:bool=True):
     return tracking.model_dump()
+
+class AppoinmentInfo(BaseModel):
+    patient_name:str
+    time:str
+
+@app.post("/doctors/{doctor_id}/appointments")
+async def create_an_appointment(doctor_id:int, appointment:AppoinmentInfo, is_urgent:bool=False):
+    appointment_dict= appointment.model_dump()
+    if not is_urgent:
+        appointment_dict.update({"rảnh?":is_urgent})
+    return appointment_dict
