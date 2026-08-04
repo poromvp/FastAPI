@@ -93,3 +93,14 @@ class PriceInfo(BaseModel):
 async def create_deposit(wallet_id:int, price:PriceInfo, currency:str="VND"):
     return price.model_dump()
 
+class IssueInfo(BaseModel):
+    issue_type: int
+    error_message: str
+
+@app.post("/devices/{device_id}/tickets")
+async def create_issue_tickets(device_id:int, issue:IssueInfo, priority:int = 5):
+    return {
+        "device_id": device_id,
+        "issue": issue,
+        "priority": priority
+    }
