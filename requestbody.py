@@ -14,3 +14,7 @@ async def create_item(item : Item):
     if item.grade:
         item_dict.update({"descripton": f"{item.name} học lớp {item.grade} có mã số là {item.student_id}"})
     return item_dict
+
+@app.put("/items/{item_id}")
+async def create_item_with_put(item_id:int, item: Item):
+    return {"item_id": item_id, **item.dict()}
