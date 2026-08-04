@@ -57,3 +57,11 @@ async def create_book_hotel(hotel_id:int, book:BookInfo, nights:int):
     if nights:
         book_dict.update({"số đêm" : nights})
     return book_dict
+
+class StudentInfo(BaseModel):
+    student_id:int
+    name:str
+
+@app.post("/classes/{class_code}/students")
+async def create_student(class_code:int, student:StudentInfo, semester:str="Fall"):
+    return student.model_dump()
