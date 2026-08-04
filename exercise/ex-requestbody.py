@@ -84,3 +84,12 @@ async def create_an_appointment(doctor_id:int, appointment:AppoinmentInfo, is_ur
     if not is_urgent:
         appointment_dict.update({"rảnh?":is_urgent})
     return appointment_dict
+
+class PriceInfo(BaseModel):
+    amount:float
+    description:str
+
+@app.post("/wallets/{wallet_id}/deposit")
+async def create_deposit(wallet_id:int, price:PriceInfo, currency:str="VND"):
+    return price.model_dump()
+
