@@ -26,13 +26,24 @@ async def update_product(product_id: int, product: ProductInfo, force_update:boo
     return product_dict
 
 class PostInfo(BaseModel):
+    title: str
+    content: str
+
+@app.post("/categories/{category_id}/posts")
+async def create_post(category_id:int, post:PostInfo, publish_now:bool= False):
+    post_dict = post.model_dump()
+    if publish_now:
+        post_dict.update({"publish_now":True})
+    return post_dict
+
+class ReviewInfo(BaseModel):
     rating: int
     comment: str
 
-@app.post("/categories/{category_id}/posts")
-async def create_post(category_id:int, post:PostInfo, anonymous:bool= False):
-    post_dict = post.model_dump()
+@app.post("/courses/{course_id}/reviews")
+async def create_review_course(course_id:int, review:ReviewInfo, anonymous:bool=False):
+    reviews_dict = review.model_dump()
     if anonymous:
-        post_dict.update({"anonymous":True})
-    return post_dict
+        reviews_dict.update({"anonymous" : True})
+    return reviews_dict
 
