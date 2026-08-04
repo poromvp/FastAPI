@@ -10,4 +10,7 @@ class Item (BaseModel):
 
 @app.post("/items")
 async def create_item(item : Item):
-    return item
+    item_dict = item.dict()
+    if item.grade:
+        item_dict.update({"descripton": f"{item.name} học lớp {item.grade} có mã số là {item.student_id}"})
+    return item_dict
