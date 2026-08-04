@@ -65,3 +65,11 @@ class StudentInfo(BaseModel):
 @app.post("/classes/{class_code}/students")
 async def create_student(class_code:int, student:StudentInfo, semester:str="Fall"):
     return student.model_dump()
+
+class TrackingInfo(BaseModel):
+    status:str
+    location:float
+
+@app.patch("/deliveries/{tracking_number}")
+async def update_tracking(tracking_number:int, tracking:TrackingInfo, notify_user:bool=True):
+    return tracking.model_dump()
