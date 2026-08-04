@@ -47,3 +47,13 @@ async def create_review_course(course_id:int, review:ReviewInfo, anonymous:bool=
         reviews_dict.update({"anonymous" : True})
     return reviews_dict
 
+class BookInfo (BaseModel):
+    customer_name:str
+    room_type:str
+
+@app.post("/hotels/{hotel_id}/books")
+async def create_book_hotel(hotel_id:int, book:BookInfo, nights:int):
+    book_dict = book.model_dump()
+    if nights:
+        book_dict.update({"số đêm" : nights})
+    return book_dict
