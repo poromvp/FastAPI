@@ -24,3 +24,15 @@ async def update_product(product_id: int, product: ProductInfo, force_update:boo
     if force_update:
         product_dict.update({"name" : "Đã cập nhật"})
     return product_dict
+
+class PostInfo(BaseModel):
+    rating: int
+    comment: str
+
+@app.post("/categories/{category_id}/posts")
+async def create_post(category_id:int, post:PostInfo, anonymous:bool= False):
+    post_dict = post.model_dump()
+    if anonymous:
+        post_dict.update({"anonymous":True})
+    return post_dict
+
