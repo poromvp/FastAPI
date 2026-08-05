@@ -9,7 +9,8 @@ class Item (BaseModel):
     grade: int | None = None
 
 @app.get("/items")
-async def read_items(q: list[str] | None = None):
+async def read_items(q: list[str] = Query(["hi", "hello"])):
+    #         dict[key, value có thể là str hoặc list[str]]
     results : dict[str, str| list[str]] = {"items" : "baa"}
     if q is not None:
         results.update({"q" : q})
