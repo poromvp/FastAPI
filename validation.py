@@ -17,7 +17,8 @@ async def read_items(
         min_length=3, 
         max_length=10, 
         title="Sample query string",
-        description="This is a sample query string"),
+        description="This is a sample query string",
+        alias= "item-query"),
     ):
     #         dict[key, value có thể là str hoặc list[str]]
     results: dict[str, str | list[str]] = {"items": "baa"}
