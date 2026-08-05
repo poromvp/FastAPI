@@ -9,7 +9,7 @@ class Item (BaseModel):
     grade: int | None = None
 
 @app.get("/items")
-async def read_items(q: str | None = Query(None, min_length=3, max_length=10, regex="^fixedquery$")):
+async def read_items(q: str = Query(..., min_length=3, max_length=10)):
     results = {"items" : "baa"}
     if q:
         results.update({"q" : q})
