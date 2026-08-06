@@ -3,19 +3,26 @@ from pydantic import BaseModel
 
 app = FastAPI(title="BookStore API")
 
-#a)
+
+# a)
 @app.get("/")
 async def root():
-    return {"message" : "Chào mừng đến với cửa hàng sách"}
+    return {"message": "Chào mừng đến với cửa hàng sách"}
 
-#c)
+
+# c)
 @app.get("/books/bestseller")
 async def getBestSellerBook():
-    return {"message" : "Đây là sách bán chạy nhất"}
+    return {"message": "Đây là sách bán chạy nhất"}
 
-#b)
+
+# b)
 @app.get("/books/{book_id}")
-async def get_book_by_id(book_id:int):
-    return {"book_id" : book_id, "status": "available"}
+async def getBookById(book_id: int):
+    return {"book_id": book_id, "status": "available"}
 
 
+# d)
+@app.get("/books/")
+async def findBooks(skip: int = 0, limit: int = 10):
+    return {"skip": skip, "limit": limit, "message": f"Trả về {limit} sách, bỏ qua {skip} sách đầu."}
