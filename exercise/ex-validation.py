@@ -8,7 +8,14 @@ app = FastAPI(title="BookStore API")
 async def root():
     return {"message" : "Chào mừng đến với cửa hàng sách"}
 
+#c)
+@app.get("/books/bestseller")
+async def getBestSellerBook():
+    return {"message" : "Đây là sách bán chạy nhất"}
+
 #b)
 @app.get("/books/{book_id}")
 async def get_book_by_id(book_id:int):
     return {"book_id" : book_id, "status": "available"}
+
+
