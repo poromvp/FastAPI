@@ -26,4 +26,8 @@ async def read_items(
         results.update({"q": q})
     return results
 
-hden
+@app.get("/items_hidden")
+async def hidden_query_route(hidden_query: str | None = Query(None, include_in_schema=False)):
+    if hidden_query:
+        return {"hidden_query": hidden_query}
+    return {"hidden_querry": "Not found"}
