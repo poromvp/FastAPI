@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from pydantic import BaseModel
 
 app = FastAPI(title="BookStore API")
@@ -51,3 +51,8 @@ async def update_book(book_id:int, book:Book, is_discount:bool = False):
         "final_price": final_price,
         "updated_data": book
     }
+
+# g)
+@app.get("/search/")
+async def search_book(q:str = Query(..., min_length=3, max_length=50)):
+    return {"search query": q, "message" : "Đang tìm kiếm..."}
