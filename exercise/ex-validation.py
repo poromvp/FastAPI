@@ -61,3 +61,7 @@ async def search_book(q:str = Query(..., min_length=3, max_length=50)):
 @app.get("/users/verify")
 async def verify_book(phone:str = Query(..., pattern=r"^0\d{9}$", description="Số điện thoại phải 10 số và bắt đầu bằng 0")):
     return {"phone": phone, "status": "Hợp lệ"}
+
+# i)
+@app.get("/filters")
+async def filter_books(cat_id: int | None = Query(None, alias="category-id"), tags: list[str] = Query([])
