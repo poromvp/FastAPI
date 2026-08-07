@@ -64,4 +64,9 @@ async def verify_book(phone:str = Query(..., pattern=r"^0\d{9}$", description="S
 
 # i)
 @app.get("/filters")
-async def filter_books(cat_id: int | None = Query(None, alias="category-id"), tags: list[str] = Query([])
+async def filter_books(
+    cat_id: int | None = Query(None, alias="category-id"), 
+    tags: list[str] = Query([]), 
+    debug_mode: bool = Query(False, include_in_schema=False)):
+    
+                       
