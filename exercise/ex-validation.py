@@ -41,4 +41,13 @@ async def findBooks(skip: int = 0, limit: int = 10):
 async def create_book(book:Book):
     return {"message":"Sách đã được tạo thành công", "book_info" : book.model_dump()}
 
-
+# f)
+@app.put("/books/{book_id}")
+async def update_book(book_id:int, book:Book, is_discount:bool = False):
+    final_price = book.price * 0.9 if is_discount else book.price
+    return {
+        "book_id": book_id,
+        "is_discount_applied": is_discount,
+        "final_price": final_price,
+        "updated_data": book
+    }
