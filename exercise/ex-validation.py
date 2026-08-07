@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
 
@@ -80,11 +82,14 @@ async def verify_book(
 @app.get("/filters")
 async def filter_books(
     cat_id: int | None = Query(None, alias="category-id"),
-    tags: list[str] = Query([]),
+    tags: Annotated[list[str] | None, Query()] = None,
     debug_mode: bool = Query(False, include_in_schema=False),
 ):
 
-    result = {"category_id_received": cat_id, "tags": tags}
+    if tags is None:
+        tags = []
+
+    result: dict[str, object] = {"category_id_received": cat_id, "tags": tags}
 
     if debug_mode:
         result["debug_info"] = "Bạn đã tìm ra tham số ẩn!"
