@@ -6,6 +6,11 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
+#d)
+class Pet(BaseModel):
+    name: str
+    age: int
+
 #a)
 @app.get("/")
 async def read_root():
@@ -22,4 +27,6 @@ async def search_pets(type:str = "", limit:int = 10):
     return {"type": type, "limit": limit}
 
 #d)
- 
+@app.post("/pets/")
+async def create_pet(pet: Pet):
+    return {"message": f"Pet {pet.name} created successfully!", "pet": pet}
