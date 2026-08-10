@@ -49,3 +49,8 @@ async def search_items(q: str = Query(..., min_length=3, max_length=15)):
 @app.get("/employees/")
 async def read_employees(emp_code: str = Query(..., regex=r"^EMP\d{3}$",title="Employee Code")):
     return {"employee_code": emp_code}
+
+#h)
+@app.get("/items/{item_id}")
+async def read_products(item_id: int = Path(..., ge=10, le=100)):
+    return {"item_id": item_id}
