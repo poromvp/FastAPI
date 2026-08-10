@@ -30,3 +30,12 @@ async def search_pets(type:str = "", limit:int = 10):
 @app.post("/pets/")
 async def create_pet(pet: Pet):
     return {"message": f"Pet {pet.name} created successfully!", "pet": pet}
+
+#e)
+@app.put("/pets/{pet_id}")
+async def update_pet(pet_id: int, pet: Pet, is_adopted: bool = False):
+    return {
+        "message": f"Pet {pet_id} updated successfully!", 
+        "pet": pet, 
+        "is_adopted": is_adopted
+        }
