@@ -6,6 +6,14 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
+#a)
 @app.get("/")
 async def read_root():
     return {"message": "Chào mừng đến với Pet Store!"}
+
+#b)
+@app.get("/pets/{pet_id}")
+async def read_pet(pet_id: int):
+    return {"pet_id": pet_id}
+
+ 
