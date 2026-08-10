@@ -44,3 +44,8 @@ async def update_pet(pet_id: int, pet: Pet, is_adopted: bool = False):
 @app.get("/search/")
 async def search_items(q: str = Query(..., min_length=3, max_length=15)):
     return {"search_keyword": q}
+
+#g)
+@app.get("/employees/")
+async def read_employees(emp_code: str = Query(..., regex=r"^EMP\d{3}$",title="Employee Code")):
+    return {"employee_code": emp_code}
