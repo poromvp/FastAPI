@@ -16,4 +16,10 @@ async def read_root():
 async def read_pet(pet_id: int):
     return {"pet_id": pet_id}
 
+#c)
+@app.get("/pets/")
+async def search_pets(type:str = "", limit:int = 10):
+    return {"type": type, "limit": limit}
+
+#d)
  
