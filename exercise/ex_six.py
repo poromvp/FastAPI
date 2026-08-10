@@ -39,3 +39,8 @@ async def update_pet(pet_id: int, pet: Pet, is_adopted: bool = False):
         "pet": pet, 
         "is_adopted": is_adopted
         }
+
+#f)
+@app.get("/search/")
+async def search_items(q: str = Query(..., min_length=3, max_length=15)):
+    return {"search_keyword": q}
