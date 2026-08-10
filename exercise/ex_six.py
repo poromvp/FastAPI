@@ -7,5 +7,5 @@ from pydantic import BaseModel
 app = FastAPI()
 
 @app.get("/")
-async def hello():
-    return {"message": "Hello World"}
+async def read_root():
+    return {"message": "Chào mừng đến với Pet Store!"}
