@@ -2,7 +2,7 @@
 Part 7 Body - Multiple Parameters
 """
 
-from fastapi import FastAPI, Query, Path
+from fastapi import FastAPI, Query, Path, Body
 
 from pydantic import BaseModel
 
@@ -25,7 +25,8 @@ async def update_item(
     item_id: int = Path(..., title="The ID of the item to get", ge=0, le=150),
     q: str = Query(None),
     item: Item | None = None,
-    user: User
+    user: User,
+    importance: int = Body(...)
 ):
     results = {"item_id": item_id}
     if q:
@@ -34,4 +35,6 @@ async def update_item(
         results.update({"item" :item})
     if user:
         results.update({"user" : user})
+    if importance:
+        results.update({"importance" : importance})
     return results
