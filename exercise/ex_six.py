@@ -60,3 +60,14 @@ async def read_products(item_id: int = Path(..., ge=10, le=100)):
 async def list_query_parameter(tags: list[str] = Query([])):
     return {"tags" : tags}
 
+#j)
+class Order (BaseModel):
+    item_name: str
+    quantity: int
+
+@app.post("/orders/{order_id}")
+async def create_order(*,order_id:int = Path(..., gt=0), discount_code: str = Query(None, max_length=8), order:Order):
+    result = dict({"order id" : order_id, "order" : order})
+    if discount_code:
+        result.update({"discount_code" : discount_code})
+    return result
