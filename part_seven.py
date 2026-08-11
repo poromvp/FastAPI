@@ -17,7 +17,9 @@ class Item(BaseModel):
 class User(BaseModel):
     username: str
     full_name: str | None = None
-    
+
+class Importance(BaseModel):
+    name:str
 
 @app.put("/items/{item_id}")
 async def update_item(
@@ -26,7 +28,7 @@ async def update_item(
     q: str = Query(None),
     item: Item | None = None,
     user: User,
-    importance: int = Body(...)
+    importance: Importance = Body(...)
 ):
     results = {"item_id": item_id}
     if q:
