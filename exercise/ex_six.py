@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Path
 
 from pydantic import BaseModel
 
@@ -54,3 +54,9 @@ async def read_employees(emp_code: str = Query(..., regex=r"^EMP\d{3}$",title="E
 @app.get("/items/{item_id}")
 async def read_products(item_id: int = Path(..., ge=10, le=100)):
     return {"item_id": item_id}
+
+#i)
+@app.get("/tags/")
+async def list_query_parameter(tags: list[str] = Query([])):
+    return {"tags" : tags}
+
