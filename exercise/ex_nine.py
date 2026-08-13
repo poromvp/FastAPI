@@ -36,3 +36,4 @@ class Product(BaseModel):
 @app.post("/products/")
 async def create_product(product: Product = Body(...)):
     return product
+
