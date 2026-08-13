@@ -1,7 +1,8 @@
 # Exercise 7 8 9
 
-from fastapi import FastAPI, Path, Query
+from fastapi import FastAPI, Path, Query, Body
 
+from pydantic import BaseModel
 app = FastAPI()
 
 #a)
@@ -23,4 +24,15 @@ async def get_products_by_category(category_slug:str = Path(..., min_length=3, m
 @app.get("/products/")
 async def get_products(keyword: str | None = Query(None, max_length=50), skip: int = Query(0, ge=0), limit: int=Query(10, le=100)):
     limit = limit + skip
-    return {"message" : f"Danh sách sản phẩm từ {skip} tới {limit}"}             
+    return {"message" : f"Danh sách sản phẩm từ {skip} tới {limit}"}     
+
+#e)
+class Product(BaseModel):
+    name:str
+    price:float
+    stock:int
+    is_available:bool = True
+
+@app.post("/products/")
+async def create_product(product: Product = Body(...)):
+    return product
