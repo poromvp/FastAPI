@@ -40,3 +40,5 @@ async def create_product(product: Product = Body(...)):
 #f)
 
 #g)
+
+#h)
