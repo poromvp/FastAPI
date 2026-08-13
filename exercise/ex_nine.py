@@ -37,3 +37,4 @@ class Product(BaseModel):
 async def create_product(product: Product = Body(...)):
     return product
 
+#f)
