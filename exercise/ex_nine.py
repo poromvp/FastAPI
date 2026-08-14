@@ -56,3 +56,11 @@ async def verify_promotion_code(promo_code: str = Query(None, alias="promo-code"
 @app.put("/orders/{order_id}/items/{item_id}")
 async def update_order_item_quantity(order_id:int = Path(..., ge=1), item_id:int = Path(..., ge=1), notify_customer: bool = False, quantity: int = Body(..., ge=1, le=99)):
     return {"messsage" : f"chinh sua thanh cong don hang {order_id} san pham {item_id}", "quantity" : quantity, "notify_customer" : notify_customer}
+
+#j)
+class CustomerProfile (BaseModel):
+    full_name : str
+    email: str
+@app.post("/customers/")
+async def create_customer_profile(customer: CustomerProfile = Body(..., embed=True)):
+    return {"message" : "tao thanh con khach hang", "customer" : customer}
