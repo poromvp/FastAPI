@@ -10,6 +10,11 @@ app = FastAPI()
 async def read_root():
     return {"message" : "TechMart API"}
 
+#h)
+@app.get("/products/filter")
+async def filter_products_by_tags(tags:list[str] = Query([])):
+    return {"tags" : tags, "count" : len(tags)}
+
 #b)
 @app.get("/products/{product_id}")
 async def get_product_by_id(product_id:int = Path(..., ge=1, le=100000)):
@@ -47,6 +52,4 @@ async def update_product(product_id:int = Path(..., ge=1), product: ProductCreat
 async def verify_promotion_code(promo_code: str = Query(None, alias="promo-code", pattern=r"^TECH[0-9]{4}$")):
     return {"promo-code": promo_code, "is_valid" : True}
 
-#h)
-@app.get("/")
 #g)
