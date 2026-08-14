@@ -27,18 +27,20 @@ async def get_products(keyword: str | None = Query(None, max_length=50), skip: i
     return {"message" : f"Danh sách sản phẩm từ {skip} tới {limit}"}     
 
 #e)
-class Product(BaseModel):
+class ProductCreate(BaseModel):
     name:str
     price:float
     stock:int
     is_available:bool = True
 
 @app.post("/products/")
-async def create_product(product: Product = Body(...)):
+async def create_product(product: ProductCreate = Body(...)):
     return product
 
 #f)
-
+@app.put("/products/{product_id}")
+async def update_product(product_id:int = Path(..., ge=1), product: ProductCreate = Body(...)):
+    return {"message" : f"cap nhat thanh cong sp {product_id} co thong tin nhu sau {product}"}
 #g)
 
 #h)
