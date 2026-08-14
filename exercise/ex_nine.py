@@ -64,3 +64,7 @@ class CustomerProfile (BaseModel):
 @app.post("/customers/")
 async def create_customer_profile(customer: CustomerProfile = Body(..., embed=True)):
     return {"message" : "tao thanh con khach hang", "customer" : customer}
+
+#k)
+
+
