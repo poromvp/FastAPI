@@ -52,4 +52,7 @@ async def update_product(product_id:int = Path(..., ge=1), product: ProductCreat
 async def verify_promotion_code(promo_code: str = Query(None, alias="promo-code", pattern=r"^TECH[0-9]{4}$")):
     return {"promo-code": promo_code, "is_valid" : True}
 
-#g)
+#i)
+@app.put("/orders/{order_id}/items/{item_id}")
+async def update_order_item_quantity(order_id:int = Path(..., ge=1), item_id:int = Path(..., ge=1), notify_customer: bool = False, quantity: int = Body(..., ge=1, le=99)):
+    return {"messsage" : f"chinh sua thanh cong don hang {order_id} san pham {item_id}", "quantity" : quantity, "notify_customer" : notify_customer}
