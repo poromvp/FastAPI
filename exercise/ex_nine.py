@@ -24,7 +24,7 @@ async def get_products_by_category(category_slug:str = Path(..., min_length=3, m
 @app.get("/products/")
 async def get_products(keyword: str | None = Query(None, max_length=50), skip: int = Query(0, ge=0), limit: int=Query(10, le=100)):
     limit = limit + skip
-    return {"message" : f"Danh sách sản phẩm từ {skip} tới {limit}"}     
+    return {"message" : f"Danh sách sản phẩm từ {skip} tới {limit}", "keyword": keyword}     
 
 #e)
 class ProductCreate(BaseModel):
@@ -41,8 +41,12 @@ async def create_product(product: ProductCreate = Body(...)):
 @app.put("/products/{product_id}")
 async def update_product(product_id:int = Path(..., ge=1), product: ProductCreate = Body(...)):
     return {"message" : f"cap nhat thanh cong sp {product_id} co thong tin nhu sau {product}"}
+
 #g)
+@app.get("/promotions/verify")
+async def verify_promotion_code(promo_code: str = Query(None, alias="promo-code", pattern=r"^TECH[0-9]{4}$")):
+    return {"promo-code": promo_code, "is_valid" : True}
 
 #h)
-
+@app.get("/")
 #g)
