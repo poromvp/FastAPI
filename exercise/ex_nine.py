@@ -112,3 +112,12 @@ class InventoryItem(BaseModel):
 @app.post("/inventory/items/")
 async def create_inventory_item(inventory_item: InventoryItem):
     return {"message" : "tao inventory item thanh cong", "inventory_item":inventory_item}
+
+#o)
+class CategoryCreate(BaseModel):
+    category_name: str
+    products: list[ProductCreate]
+    
+@app.post("/categories/with-products")
+async def create_category_with_products(category: CategoryCreate):
+    return {"category" : category}
