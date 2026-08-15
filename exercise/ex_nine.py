@@ -84,5 +84,12 @@ async def create_voucher(voucher: VoucherCreate):
     return {"message" :"tao voucher thanh cong", "voucher" : voucher}
 
 #m)
-
+class ProductReview(BaseModel):
+    product_id: int = Field(..., ge=1)
+    rating: int = Field(..., ge=1, le=5, description="Đánh giá so sao từ 1 đến 5")
+    title: str = Field(..., min_length=5, max_length=100)
+    comment: str | None = Field(None, max_length=500)
+@app.post("/reviews/")
+async def create_product_review(review: ProductReview):
+    return {"message" : "tao danh gia san pham thanh cong", "review" : review}
 #n)
