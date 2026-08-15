@@ -121,3 +121,27 @@ class CategoryCreate(BaseModel):
 @app.post("/categories/with-products")
 async def create_category_with_products(category: CategoryCreate):
     return {"category" : category}
+
+#p)
+class Address(BaseModel):
+    street: str
+    city: str
+    zip_code:str
+
+class OrderItem(BaseModel):
+    product_id:int
+    quantity: int = Field(..., gt=0)
+    
+class OrderCheckout(BaseModel):
+    customer_id: int = Field(..., ge=1)
+    shipping_address: Address
+    item: list[OrderItem]
+    payment_method: str = Field(..., pattern=r"^(CREDIT_CARD|E_WALLET|COD)$")
+    
+@app.post("/stores/{store_id}/checkout")
+async def process_full_checkout(*, store_id: int = Path(..., ge=1),
+                                express_shipping: bool = Query(False),
+                                order_checkout: OrderCheckout):
+    return {"store_id" : store_id,
+            "express_shipping" : express_shipping,
+            "order_checkout" : order_checkout}
