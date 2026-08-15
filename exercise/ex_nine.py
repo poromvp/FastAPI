@@ -22,7 +22,7 @@ async def get_product_by_id(product_id:int = Path(..., ge=1, le=100000)):
 
 #c)
 @app.get("/categories/{category_slug}/products")
-async def get_products_by_category(category_slug:str = Path(..., min_length=3, max_length=30, regex='^[a-z0-9-]+$')):
+async def get_products_by_category(category_slug:str = Path(..., min_length=3, max_length=30, pattern='^[a-z0-9-]+$')):
     return {"message" : f"Danh sách sản phẩm có category id là: {category_slug}"}
 
 #d)
@@ -92,4 +92,23 @@ class ProductReview(BaseModel):
 @app.post("/reviews/")
 async def create_product_review(review: ProductReview):
     return {"message" : "tao danh gia san pham thanh cong", "review" : review}
+
 #n)
+class Dimensions(BaseModel):
+    width: float = Field(..., gt=0)
+    height: float = Field(..., gt=0)
+    depth: float = Field(..., gt=0)
+    
+class Supplier(BaseModel):
+    supplier_id: int
+    name: str
+    
+class InventoryItem(BaseModel):
+    sku: str
+    quantity: int
+    dimensions: Dimensions
+    supplier: Supplier
+
+@app.post("/inventory/items/")
+async def create_inventory_item(inventory_item: InventoryItem):
+    return {"message" : "tao inventory item thanh cong", "inventory_item":inventory_item}
