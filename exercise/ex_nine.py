@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI, Path, Query, Body
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 app = FastAPI()
 
 #a)
@@ -74,6 +74,14 @@ async def create_product_with_vendor(product: ProductCreate, vendor: VendorInfo,
     return {"message" : f"tao san pham thanh cong do nha cung cap la {vendor.vendor_name} , ", "priority" : priority, "product" : product}
 
 #l)
+class VoucherCreate(BaseModel):
+    code: str = Field(..., min_length=5, max_length=15, pattern="^[A-Z]+$")
+    discount_percent: int = Field(..., ge=0, le=100)
+    max_usage: int = Field(..., gt=0)
+    description: str | None = Field(None, max_length=200)
+@app.post("/vouchers/")
+async def create_voucher(voucher: VoucherCreate):
+    return {"message" :"tao voucher thanh cong", "voucher" : voucher}
 
 #m)
 
