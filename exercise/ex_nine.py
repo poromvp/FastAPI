@@ -66,7 +66,12 @@ async def create_customer_profile(customer: CustomerProfile = Body(..., embed=Tr
     return {"message" : "tao thanh con khach hang", "customer" : customer}
 
 #k)
-
+class VendorInfo(BaseModel):
+    vendor_name: str
+    tax_code:str
+@app.post("/products/with-vendor")
+async def create_product_with_vendor(product: ProductCreate, vendor: VendorInfo, priority: int = Body(1, ge=1, le=5)):
+    return {"message" : f"tao san pham thanh cong do nha cung cap la {vendor.vendor_name} , ", "priority" : priority, "product" : product}
 
 #l)
 
