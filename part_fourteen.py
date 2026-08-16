@@ -33,5 +33,21 @@ items = {
 
 
 @app.get("/items/{item_id}", response_model=Union[PlaneItem, CarItem])
-async def read_item(item_id: str):
+async def read_item(item_id: Literal["item1", "item2"]):
     return items[item_id]
+
+
+class ListItem(BaseModel):
+    name: str
+    description: str
+
+
+list_items = [
+    {"name": "Foo", "description": "There comes my hero"},
+    {"name": "Red", "description": "There comes my superhero"},
+]
+
+
+@app.get("/list_items/", response_model=list[ListItem])
+async def read_item():
+    return items
