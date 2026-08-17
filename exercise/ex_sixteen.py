@@ -43,11 +43,12 @@ class PublisherInfo(BaseModel):
     name:str
 
 @app.put("/books/{book_id}")
-async def update_book(*,book_id: int = Path(..., gt=0), publisher_info: PublisherInfo, book: BookCreate):
+async def update_book(*,book_id: int = Path(..., gt=0), publisher_info: PublisherInfo, importance: int = Body(...), book: BookCreate):
     return {
         "book_id" : book_id,
         "publisher_info" : publisher_info,
-        "book": book
+        "book": book,
+        "importance" : importance
     }
 
 #h
@@ -72,4 +73,4 @@ class LibaryCreate(BaseModel):
 async def create_library(library: LibaryCreate):
     return {"library" : library}
 
-#
+#j
