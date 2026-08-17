@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Path, Query, Body
 from pydantic import BaseModel, Field
+from datetime import datetime
 
 app = FastAPI()
 
@@ -83,3 +84,12 @@ class LibaryCreate(BaseModel):
 @app.post("/libraries/")
 async def create_library(library: LibaryCreate):
     return {"library" : library}
+
+#k
+@app.get("/events/")
+async def search_event(*, keyword: str = Query(..., min_length=1, max_length=255), start_date: datetime):
+    return {
+        "keyword" : keyword,
+        "start_date": start_date
+    }
+
