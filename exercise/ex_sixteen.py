@@ -49,3 +49,13 @@ async def update_book(*,book_id: int = Path(..., gt=0), publisher_info: Publishe
         "publisher_info" : publisher_info,
         "book": book
     }
+
+#h
+class MagazineCreate(BaseModel):
+    price: int = Field(..., gt=0)
+    code: str = Field(..., pattern="^MAG-\\d{4}$")
+
+@app.post("/magazines/")
+async def create_magazine(magazine: MagazineCreate):
+    return {"magazine" : magazine}
+
