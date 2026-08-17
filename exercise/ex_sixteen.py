@@ -23,6 +23,17 @@ async def get_books(skip:int = Query(0, gt=0), limit:int = Query(10, gt=0)):
 class BookCreate(BaseModel):
     title: str = Field(..., min_length=3)
     author: str = Field(..., pattern="^AUTHOR-[A-z]+$")
+    #j
+    model_config = {
+        "json_schema_extra": {
+            "examples" : [
+                {
+                    "title" : "Lập trình Python",
+                    "author" : "Trịnh Tấn Đạt"
+                }
+            ]
+        }
+    }
 
 @app.post("/books/")
 async def create_book(book: BookCreate):
@@ -72,5 +83,3 @@ class LibaryCreate(BaseModel):
 @app.post("/libraries/")
 async def create_library(library: LibaryCreate):
     return {"library" : library}
-
-#j
