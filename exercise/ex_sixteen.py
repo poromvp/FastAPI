@@ -59,3 +59,17 @@ class MagazineCreate(BaseModel):
 async def create_magazine(magazine: MagazineCreate):
     return {"magazine" : magazine}
 
+#i
+class Location(BaseModel):
+    city: str
+    zip_code: str
+
+class LibaryCreate(BaseModel):
+    books: list[BookCreate]
+    location: Location
+
+@app.post("/libraries/")
+async def create_library(library: LibaryCreate):
+    return {"library" : library}
+
+#
