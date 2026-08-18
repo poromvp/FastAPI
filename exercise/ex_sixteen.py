@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Path, Query, Body, Cookie, Header
+from fastapi import FastAPI, Path, Query, Body, Cookie, Header, status
 from pydantic import BaseModel, Field
 from datetime import datetime
 
@@ -114,3 +114,8 @@ class UserOut(BaseModel):
 @app.post("/users/", response_model=UserOut)
 async def create_user(user: UserIn):
     return user
+
+#o
+@app.delete("/books/{book_id}")
+async def delete_user_by_id(book_id: int):
+    return status.HTTP_204_NO_CONTENT
