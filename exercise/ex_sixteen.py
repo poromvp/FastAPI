@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Path, Query, Body, Cookie, Header, status
+from fastapi import FastAPI, Path, Query, Body, Cookie, Header, status, Form
 from pydantic import BaseModel, Field
 from datetime import datetime
 
@@ -119,3 +119,8 @@ async def create_user(user: UserIn):
 @app.delete("/books/{book_id}")
 async def delete_user_by_id(book_id: int):
     return status.HTTP_204_NO_CONTENT
+
+#p
+@app.post("/login/")
+async def login(username: str = Form(...), password: str = Form(...)):
+    return {"username" : username, "status": "success"}
