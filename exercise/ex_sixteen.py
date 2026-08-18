@@ -1,7 +1,7 @@
-from fastapi import FastAPI, Path, Query, Body, Cookie, Header, status, Form
+from fastapi import FastAPI, Path, Query, Body, Cookie, Header, status, Form, Response
 from pydantic import BaseModel, Field
 from datetime import datetime
-
+import uuid
 app = FastAPI()
 
 #a
@@ -100,7 +100,7 @@ async def get_sesson_id_user(session_id: str | None = Cookie(None)):
 
 #m
 @app.get("/secure-data/")
-async def get_secure_data(x_token: str | None = Header(None))
+async def get_secure_data(x_token: str | None = Header(None)):
     return {"x-token" : x_token}
 
 #n
@@ -124,3 +124,20 @@ async def delete_user_by_id(book_id: int):
 @app.post("/login/")
 async def login(username: str = Form(...), password: str = Form(...)):
     return {"username" : username, "status": "success"}
+
+#Example saving data in cookie
+@app.post("/login-exam/")
+async def login_and_set_cookie(response: Response):
+    new_session_id = str(uuid.uuid4())
+
+    response.set_cookie(
+        key="session_id",
+        value=new_session_id,
+        httponly=True,
+        max_age=36
+    )
+
+    return {
+        "message" : "Da thiet lap Cookie thanh cong",
+        "session_id_created": new_session_id
+    }
