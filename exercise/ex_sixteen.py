@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Path, Query, Body, Cookie, Header, status, Form, Response
+from fastapi import FastAPI, Path, Query, Body, Cookie, Header, status, Form, Response, HTTPException
 from pydantic import BaseModel, Field
 from datetime import datetime
 import uuid
@@ -140,4 +140,21 @@ async def login_and_set_cookie(response: Response):
     return {
         "message" : "Da thiet lap Cookie thanh cong",
         "session_id_created": new_session_id
+    }
+
+#example about Header
+@app.get("/vip-club/")
+async def enter_vip_club(
+    x_secret_token: str | None = Header(None),
+    user_agent: str| None = Header(None)
+):
+    if x_secret_token != "vung-oi-mo-ra":
+        raise HTTPException(
+            status_code=401,
+            detail="Canh bao: sai ma"
+        )
+    return {
+        "message" : "Tuyet voi!",
+        "token da dung": x_secret_token,
+        "thiet_bi_cua_ban": user_agent
     }
