@@ -103,3 +103,14 @@ async def get_sesson_id_user(session_id: str | None = Cookie(None)):
 async def get_secure_data(x_token: str | None = Header(None))
     return {"x-token" : x_token}
 
+#n
+class UserIn(BaseModel):
+    name: str
+    password: str
+
+class UserOut(BaseModel):
+    name: str
+
+@app.post("/users/", response_model=UserOut)
+async def create_user(user: UserIn):
+    return user
