@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Path, Query, Body, Cookie
+from fastapi import FastAPI, Path, Query, Body, Cookie, Header
 from pydantic import BaseModel, Field
 from datetime import datetime
 
@@ -97,3 +97,9 @@ async def search_event(*, keyword: str = Query(..., min_length=1, max_length=255
 @app.get("/users/me/")
 async def get_sesson_id_user(session_id: str | None = Cookie(None)):
     return {"session_id" : session_id}
+
+#m
+@app.get("/secure-data/")
+async def get_secure_data(x_token: str | None = Header(None))
+    return {"x-token" : x_token}
+
