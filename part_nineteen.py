@@ -17,8 +17,9 @@ from fastapi import (
     UploadFile,
     Request,
 )
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from pydantic import BaseModel, Field
+from fastapi.exceptions import RequestValidationError
 
 app = FastAPI()
 
@@ -54,3 +55,15 @@ async def get_item(name: Annotated[str, Path()]):
     if name == "aaa":
         raise ItemErrorHandler(name=name)
     return {"name": name}
+
+
+@app.exception_handler(RequestValidationError)
+async def error_path_type(request, exc):
+    return PlainTextResponse(str(exc), status_code=400)
+
+
+@app.get("/validation_items/{item_id}")
+async def read_validation_items(item_id: Annotated[int, Path()]):
+    if item_id == 3:
+        raise HTTPException(status_code=418, detail="i don't like number 3")
+    return {"item-id": item_id}
