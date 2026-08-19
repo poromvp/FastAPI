@@ -15,8 +15,9 @@ from fastapi import (
     status,
     File,
     UploadFile,
+    Request,
 )
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel, Field
 
 app = FastAPI()
@@ -34,3 +35,22 @@ async def get_item_by_id(item_id: Annotated[str, Path()]):
             headers={"X-Error": "There goes my error"},
         )
     return {"item": items[item_id]}
+
+
+class ItemErrorHandler(Exception):
+    def __init__(self, name: str):
+        self.name = name
+
+
+@app.exception_handler(ItemErrorHandler)
+async def item_error_handler(request: Request, exc: ItemErrorHandler):
+    return JSONResponse(
+        status_code=418, content={"message": "Opps, something went wrong"}
+    )
+
+
+@app.get("/items-error/{name}")
+async def get_item(name: Annotated[str, Path()]):
+    if name == "aaa":
+        raise ItemErrorHandler(name=name)
+    return {"name": name}
