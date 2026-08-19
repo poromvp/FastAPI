@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
 
+from typing import Annotated
 from fastapi import (
     Body,
     Cookie,
@@ -22,10 +23,14 @@ app = FastAPI()
 
 # Part 17 Request File
 @app.post("/files/")
-async def create_file(f: bytes = File(...)):
-    return {"file": len(f)}
+async def create_file(
+    files: Annotated[list[bytes], File(..., description="list of file")],
+):
+    return {"file": [len(file) for file in files]}
 
 
 @app.post("/upload-files/")
-async def create_upload_files(files: UploadFile):
-    return {"file-name": files.filename}
+async def create_upload_files(
+    files: Annotated[list[UploadFile], File(..., description="list of file")],
+):
+    return {"file-name": [file.filename for file in files]}
