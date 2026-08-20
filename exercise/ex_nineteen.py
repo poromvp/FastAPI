@@ -25,3 +25,6 @@ app = FastAPI()
 
 #b) Fields & Example: Tạo model Book chứa Author (Nested model). Dùng Field để ràng buộc giá sách > 0. Cấu hình Config để hiển thị dữ liệu mẫu (Example Data) trên Swagger UI.
 
+#c) Extra Models: Tạo 3 model cho người dùng: UserIn (có password), UserOut (không password), và UserInDB (có hashed_password).
+
+#d) 
