@@ -32,3 +32,5 @@ app = FastAPI()
 #e) Response Model: Tạo endpoint POST /users/register. Nhận vào UserIn, nhưng bắt buộc dùng response_model=UserOut để tự động lọc bỏ password khi trả về.
 
 #f) Header & Cookie: Tạo endpoint GET /users/me. Yêu cầu một session_id từ Cookie và user_agent từ Header để giả lập việc kiểm tra phiên đăng nhập.
+
+#g) String Validation (Query): GET /books. Nhận query q để tìm sách, yêu cầu độ dài tối thiểu 3 ký tự.
