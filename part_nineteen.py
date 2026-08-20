@@ -20,6 +20,7 @@ from fastapi import (
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from pydantic import BaseModel, Field
 from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StartLetteHTTPException
 
 app = FastAPI()
 
@@ -60,6 +61,11 @@ async def get_item(name: Annotated[str, Path()]):
 @app.exception_handler(RequestValidationError)
 async def error_path_type(request, exc):
     return PlainTextResponse(str(exc), status_code=400)
+
+
+@app.exception_handler(StartLetteHTTPException)
+async def http_exception_handler(request, exc):
+    return PlainTextResponse(str(exc.detail), status_code=exc.status_code)
 
 
 @app.get("/validation_items/{item_id}")
