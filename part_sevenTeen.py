@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from typing import Annotated, List
+from typing import Annotated
 from fastapi import (
     Body,
     Cookie,
