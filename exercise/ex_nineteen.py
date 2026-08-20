@@ -28,3 +28,7 @@ app = FastAPI()
 #c) Extra Models: Tạo 3 model cho người dùng: UserIn (có password), UserOut (không password), và UserInDB (có hashed_password).
 
 #d) Form Fields: Tạo endpoint POST /login. Nhận username và password bằng Form (không phải JSON).
+
+#e) Response Model: Tạo endpoint POST /users/register. Nhận vào UserIn, nhưng bắt buộc dùng response_model=UserOut để tự động lọc bỏ password khi trả về.
+
+#
