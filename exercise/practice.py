@@ -42,8 +42,10 @@ async def create_author(author: Author):
 
 #b) Fields & Example: Tạo model Book chứa Author (Nested model). Dùng Field để ràng buộc giá sách > 0. Cấu hình Config để hiển thị dữ liệu mẫu (Example Data) trên Swagger UI.
 class Book (BaseModel):
-    author: Annotated[Author, Field()]
+    id: Annotated[int, Field()]
+    title: Annotated[str, Field(min_length=2, max_length=100)]
     price: Annotated[float, Field(gt=0.0)]
+    author: Annotated[Author, Field()]
     model_config = {
             "json_schema_extra": {
                 "examples" : [
@@ -64,6 +66,19 @@ async def create_book(book: Book):
     return {"book": book}
 
 #c) Extra Models: Tạo 3 model cho người dùng: UserIn (có password), UserOut (không password), và UserInDB (có hashed_password).
+class UserBase(BaseModel):
+    username: str
+    email:str
+
+class UserIn(UserBase):
+    password: str
+
+class UserOut(UserBase):
+    pass
+
+class UserInDB(UserBase):
+    haspassword: Annotated[str, Field()]
+
 
 #d) Form Fields: Tạo endpoint POST /login. Nhận username và password bằng Form (không phải JSON).
 
