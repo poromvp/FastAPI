@@ -22,6 +22,15 @@ from pydantic import BaseModel, Field
 app = FastAPI()
 
 #a) Nested & Extra Data Types: Tạo model Author (có UUID là id, tên, ngày sinh datetime).
+class Author(BaseModel):
+    id: Annotated[str, Field(uuid.uuid4())]
+    name: Annotated[str, Field()]
+    date: Annotated[datetime | None, Field()] = None
+
+@app.post("/authors/")
+async def create_author(author: Author):
+    return {"author": author}
+
 
 #b) Fields & Example: Tạo model Book chứa Author (Nested model). Dùng Field để ràng buộc giá sách > 0. Cấu hình Config để hiển thị dữ liệu mẫu (Example Data) trên Swagger UI.
 
