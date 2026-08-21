@@ -21,7 +21,10 @@ from pydantic import BaseModel, Field
 
 app = FastAPI(title="Mini E-Library", description="Project tổng hợp FastAPI Part 2-19")
 
-
+fake_books_db = {
+    1: {"id": 1, "title": "FastAPI Masterclass", "price": 19.99}
+}
+fake_users_db: dict[str,str] = {}
 
 def fake_password_hasher(raw_password: str):
     return f"supersecret_{raw_password}"
