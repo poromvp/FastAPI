@@ -77,7 +77,7 @@ class UserOut(UserBase):
     pass
 
 class UserInDB(UserBase):
-    haspassword: Annotated[str, Field()]
+    hashpassword: Annotated[str, Field()]
 
 #d) Form Fields: Tạo endpoint POST /login. Nhận username và password bằng Form (không phải JSON).
 @app.post("/login", tags=["Users"])
@@ -85,6 +85,9 @@ async def login_form(username: Annotated[str, Form()], password: Annotated[str, 
     return {"username": username}
 
 #e) Response Model: Tạo endpoint POST /users/register. Nhận vào UserIn, nhưng bắt buộc dùng response_model=UserOut để tự động lọc bỏ password khi trả về.
+@app.post("/users/register", response_model=UserOut, tags=["Users"], status_code=status.HTTP_201_CREATED)
+async def register_user(user: UserIn):
+    return user #Không trả ra {"user" : user}
 
 #f) Header & Cookie: Tạo endpoint GET /users/me. Yêu cầu một session_id từ Cookie và user_agent từ Header để giả lập việc kiểm tra phiên đăng nhập.
 
