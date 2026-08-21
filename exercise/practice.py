@@ -19,7 +19,12 @@ from fastapi import (
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 
-app = FastAPI()
+app = FastAPI(title="Mini E-Library", description="Project tổng hợp FastAPI Part 2-19")
+
+
+
+def fake_password_hasher(raw_password: str):
+    return f"supersecret_{raw_password}"
 
 #a) Nested & Extra Data Types: Tạo model Author (có UUID là id, tên, ngày sinh datetime).
 class Author(BaseModel):
@@ -33,6 +38,27 @@ async def create_author(author: Author):
 
 
 #b) Fields & Example: Tạo model Book chứa Author (Nested model). Dùng Field để ràng buộc giá sách > 0. Cấu hình Config để hiển thị dữ liệu mẫu (Example Data) trên Swagger UI.
+class Book (BaseModel):
+    author: Annotated[Author, Field()]
+    price: Annotated[float, Field(gt=0.0)]
+    model_config = {
+            "json_schema_extra": {
+                "examples" : [
+                    {
+                        "author" : {
+                            "id" : "e4c2f507-f1dd-4b2c-b9dc-14af7f73eea8",
+                            "name": "Trinh Tan Dat",
+                            "date": "3" 
+                        },
+                        "price" : 12.5
+                    }
+                ]
+            }
+        }
+
+@app.post("/books/")
+async def create_book(book: Book):
+    return {"book": book}
 
 #c) Extra Models: Tạo 3 model cho người dùng: UserIn (có password), UserOut (không password), và UserInDB (có hashed_password).
 
