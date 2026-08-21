@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from typing import Annotated, List
+from typing import Annotated
 from fastapi import (
     Body,
     Cookie,
@@ -90,5 +90,15 @@ async def register_user(user: UserIn):
     return user #Không trả ra {"user" : user}
 
 #f) Header & Cookie: Tạo endpoint GET /users/me. Yêu cầu một session_id từ Cookie và user_agent từ Header để giả lập việc kiểm tra phiên đăng nhập.
+@app.get("/users/me", tags=["Users"])
+async def simulate_login(
+    session_id: Annotated[str | None, Cookie()] = None,
+    user_agent: Annotated[str | None, Header()] = None,
+):
+    return {
+        "session_id" : session_id,
+        "user_agent" : user_agent
+    }
+
 
 #g) String Validation (Query): GET /books. Nhận query q để tìm sách, yêu cầu độ dài tối thiểu 3 ký tự.
