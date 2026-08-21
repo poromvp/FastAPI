@@ -79,8 +79,10 @@ class UserOut(UserBase):
 class UserInDB(UserBase):
     haspassword: Annotated[str, Field()]
 
-
 #d) Form Fields: Tạo endpoint POST /login. Nhận username và password bằng Form (không phải JSON).
+@app.post("/login", tags=["Users"])
+async def login_form(username: Annotated[str, Form()], password: Annotated[str, Form()]):
+    return {"username": username}
 
 #e) Response Model: Tạo endpoint POST /users/register. Nhận vào UserIn, nhưng bắt buộc dùng response_model=UserOut để tự động lọc bỏ password khi trả về.
 
