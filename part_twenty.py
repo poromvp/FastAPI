@@ -54,3 +54,8 @@ async def read_users():
 #    if category == Tags.items:
 #        return {"message": Tags.items}
 #    return {"message": Tags.users}
+
+
+@app.get("/elements/", tags=[Tags.items], deprecated=True)
+async def read_elements():
+    return [{"item_id": "Foo"}]
