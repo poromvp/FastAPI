@@ -25,6 +25,7 @@ class Tags(Enum):
     tags=[Tags.items],
     summary="Tao san pham",
     # description="Create an item with all the information",
+    response_description="The created item",
 )
 async def create_item(item: Item):
     """
