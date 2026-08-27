@@ -23,6 +23,8 @@ class Tags(Enum):
     response_model=Item,
     status_code=status.HTTP_201_CREATED,
     tags=[Tags.items],
+    summary="Tao san pham",
+    description="Create an item with all the information",
 )
 async def create_item(item: Item):
     return item
