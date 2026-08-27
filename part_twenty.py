@@ -24,9 +24,17 @@ class Tags(Enum):
     status_code=status.HTTP_201_CREATED,
     tags=[Tags.items],
     summary="Tao san pham",
-    description="Create an item with all the information",
+    # description="Create an item with all the information",
 )
 async def create_item(item: Item):
+    """
+    Tao mot san pham voi tat ca thong tin:
+    - name: moi item phai deu co ten
+    - _description_: mo ta dai thon lon
+    - **price**: required
+    - __tax__: neu item khong co tinh thue thi bo
+    - *tags*: item thuoc loai nao
+    """
     return item
 
 
