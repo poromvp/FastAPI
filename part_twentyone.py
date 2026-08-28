@@ -57,12 +57,20 @@ def update_bakugan(item_id: str, item: Item):
 # print(stored_item_data)
 
 
-@app.patch("/items/{item_id}", response_model=Item)
-async def patch_item(item_id: str, item: Item):
+class ItemPatch(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    price: float | None = None
+    tax: float = 10.5
+    tags: set[str] = set()
+
+
+@app.patch("/items/{item_id}", response_model=ItemPatch)
+async def patch_item(item_id: str, item: ItemPatch):
     stored_item_data = items.get(item_id)
     print(stored_item_data)
     if stored_item_data is not None:
-        stored_item_model = Item(**stored_item_data)
+        stored_item_model = ItemPatch(**stored_item_data)
 
         update_data = item.model_dump(exclude_unset=True)
         print(update_data)
