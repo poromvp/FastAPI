@@ -51,3 +51,12 @@ def update_bakugan(item_id: str, item: Item):
     update_item_encoded = jsonable_encoder(item)
     items[item_id] = update_item_encoded
     return update_item_encoded
+
+
+# stored_item_data = items.get("Pyrus")
+# print(stored_item_data)
+
+
+@app.patch("/items/{item_id}", response_model=Item)
+async def patch_item(item_id: str, item: Item):
+    pass
