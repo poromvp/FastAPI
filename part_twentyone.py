@@ -60,8 +60,17 @@ def update_bakugan(item_id: str, item: Item):
 @app.patch("/items/{item_id}", response_model=Item)
 async def patch_item(item_id: str, item: Item):
     stored_item_data = items.get(item_id)
+    print(stored_item_data)
     if stored_item_data is not None:
         stored_item_model = Item(**stored_item_data)
 
         update_data = item.model_dump(exclude_unset=True)
         print(update_data)
+
+        update_item = stored_item_model.model_copy(update=update_data)
+        print(update_item)
+
+        items[item_id] = jsonable_encoder(update_item)
+
+        return update_item
+    return {"message": "item not found"}
