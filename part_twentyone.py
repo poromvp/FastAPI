@@ -59,4 +59,9 @@ def update_bakugan(item_id: str, item: Item):
 
 @app.patch("/items/{item_id}", response_model=Item)
 async def patch_item(item_id: str, item: Item):
-    pass
+    stored_item_data = items.get(item_id)
+    if stored_item_data is not None:
+        stored_item_model = Item(**stored_item_data)
+
+        update_data = item.model_dump(exclude_unset=True)
+        print(update_data)
