@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from datetime import datetime
@@ -73,4 +73,4 @@ async def patch_item(item_id: str, item: Item):
         items[item_id] = jsonable_encoder(update_item)
 
         return update_item
-    return {"message": "item not found"}
+    raise HTTPException(status_code=404, detail="item_id not found!")
