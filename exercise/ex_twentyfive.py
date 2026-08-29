@@ -57,6 +57,14 @@ class DeviceFilter:
         self.type_filter = type_filter
 
 
+def get_token():
+    pass
+
+
+def verify_user():
+    pass
+
+
 @app.post("/test/")
 async def testing_model(device: RoomCreate):
     return device
