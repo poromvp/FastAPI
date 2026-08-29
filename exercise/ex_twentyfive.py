@@ -46,9 +46,11 @@ class RoomCreate(BaseModel):
 class DeviceFilter:
     def __init__(
         self,
-        skip: Annotated[int, Query()] = 0,
-        limit: Annotated[int, Query()] = 10,
-        type_filter: Annotated[str | None, Query()] = None,
+        skip: Annotated[int, Query(ge=0)] = 0,
+        limit: Annotated[int, Query(ge=1, le=50)] = 10,
+        type_filter: Annotated[
+            str | None, Query(description="Loc theo loai: light, camera,...")
+        ] = None,
     ):
         self.skip = skip
         self.limit = limit
