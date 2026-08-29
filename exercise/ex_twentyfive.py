@@ -43,6 +43,18 @@ class RoomCreate(BaseModel):
     devices: Annotated[list[DeviceCreate], Field()]
 
 
+class DeviceFilter:
+    def __init__(
+        self,
+        skip: Annotated[int, Query()] = 0,
+        limit: Annotated[int, Query()] = 10,
+        type_filter: Annotated[str | None, Query()] = None,
+    ):
+        self.skip = skip
+        self.limit = limit
+        self.type_filter = type_filter
+
+
 @app.post("/test/")
 async def testing_model(device: RoomCreate):
     return device
