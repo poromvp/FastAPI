@@ -17,3 +17,9 @@ class User(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+
+def fake_decode_token(token: str):
+    if token == "fake-super-secret-token":
+        return {"username": "admin"}
+    return None
