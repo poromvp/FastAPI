@@ -21,6 +21,14 @@ from fastapi import (
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
+fake_db: Dict[str, list] = {
+    "rooms": [],
+    "devices": [
+        {"id": 1, "name": "Living Room Light", "type": "light"},
+        {"id": 2, "name": "Front Camera", "type": "camera"},
+    ],
+}
+
 
 class DeviceConfig(BaseModel):
     ip_address: Annotated[str, Field(..., pattern=r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$")]
@@ -95,3 +103,18 @@ async def authenticate_login(
         response.set_cookie(key="session_token", value="super-iot-token")
         return {"message": "Dang nhap thanh cong, Cookie da duoc thiet lap"}
     raise HTTPException(status_code=400, detail="Sai username va password")
+
+
+@app.get("/devices", tags=["IoT Devices"])
+async def list_devices(
+    filters: Annotated[DeviceFilter, Depends()],
+    current_user: Annotated[dict, Depends(verify_user)],
+):
+    devices = fake_db["devices"]
+    if filters.type_filter:
+        devices = [d for d in devices if d.get("type") == filters.type_filter]
+    return {
+        "user": current_user,
+        "filters_applied": {"skip": filters.skip, "limit": filters.limit},
+        "data": devices[filters.skip : filters.skip + filters.limit],
+    }
