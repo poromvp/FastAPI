@@ -20,11 +20,6 @@ from fastapi import (
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-app = FastAPI(
-    title="Smart Home IoT Hub",
-    version="1.0",
-)
-
 
 class DeviceConfig(BaseModel):
     ip_address: Annotated[str, Field(..., pattern=r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$")]
@@ -70,6 +65,18 @@ def verify_user(token: Annotated[str | None, Depends(get_token)]):
             status_code=403, detail="token khong phai la super-iot-token"
         )
     return {"username": "home_owner"}
+
+
+def verify_admin_key(
+    x_admin_key: Annotated[str, Header(description="Header bat buoc cho quyen admin")],
+):
+    if x_admin_key != "admin-secret":
+        raise HTTPException(status_code=403, detail="Tai khoan khong co quyen Admin")
+
+
+app = FastAPI(
+    title="Smart Home IoT Hub", version="1.0", dependencies=[Depends(verify_admin_key)]
+)
 
 
 @app.post("/test/")
