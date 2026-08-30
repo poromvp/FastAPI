@@ -133,3 +133,13 @@ async def create_room(
         "message": f"Phong {room_data.room_name} da duoc tao boi {current_user['username']}",
         "room_info": new_room,
     }
+
+
+@app.post("/devices/{device_id}/firmware")
+async def update_firmware(
+    device_id: Annotated[int, Path(..., ge=1)],
+    version_name: Annotated[str, Form()],
+    file_firmware: Annotated[UploadFile, File()],
+    current_user: Annotated[dict, Depends(verify_user)],
+):
+    re
