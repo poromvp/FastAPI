@@ -137,9 +137,20 @@ async def create_room(
 
 @app.post("/devices/{device_id}/firmware")
 async def update_firmware(
-    device_id: Annotated[int, Path(..., ge=1)],
-    version_name: Annotated[str, Form()],
-    file_firmware: Annotated[UploadFile, File()],
+    device_id: Annotated[int, Path(..., ge=1, description="ID thiet bi can update")],
+    version_name: Annotated[str, Form(description="Phien ban firmware, VD: v2.1.0")],
+    file_firmware: Annotated[
+        UploadFile, File(description="File nhi phan firmware(.bin)")
+    ],
     current_user: Annotated[dict, Depends(verify_user)],
 ):
-    re
+    if not any(d["id"] == device_id for d in fake_db["devices"]):
+        raise HTTPException(status_code=404, detail="Khong tim thay thiet bi")
+
+    return {
+        "device_id": device_id,
+        "action": "Firmware Uploaded",
+        "version": version_name,
+        "filename": file_firmware.filename,
+        "uploaded_by": current_user["username"],
+    }
