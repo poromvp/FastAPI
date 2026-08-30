@@ -165,4 +165,10 @@ async def update_firmware(
 async def delete_device(
     device_id: Annotated[int, Path(..., ge=1, description="ID thiet bi can delete")],
 ):
-    pass
+    initial_length = len(fake_db["devices"])
+    fake_db["devices"] = [d for d in fake_db["devices"] if d["id"] != device_id]
+
+    if len(fake_db["devices"]) == initial_length:
+        raise HTTPException(status_code=404, detail="Thiet bi khong ton tai")
+
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
