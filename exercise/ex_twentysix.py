@@ -39,3 +39,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 @app.get("/users/me")
 async def read_users_me(current_user: dict = Depends(get_current_user)):
     return {"message": "Bảo mật thành công!", "user_info": current_user}
+
+
+@app.get("/public-data")
+async def read_public_data():
+    return {"message": "Ai cũng xem được dữ liệu này"}
