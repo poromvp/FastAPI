@@ -118,3 +118,18 @@ async def list_devices(
         "filters_applied": {"skip": filters.skip, "limit": filters.limit},
         "data": devices[filters.skip : filters.skip + filters.limit],
     }
+
+
+@app.post("/rooms", status_code=status.HTTP_201_CREATED, tags=["Rooms"])
+async def create_room(
+    room_data: Annotated[
+        RoomCreate, Body(..., description="Du lieu JSON phuc tap da tang")
+    ],
+    current_user: Annotated[dict, Depends(verify_user)],
+):
+    new_room = room_data.model_dump()
+    fake_db["rooms"].append(new_room)
+    return {
+        "message": f"Phong {room_data.room_name} da duoc tao boi {current_user['username']}",
+        "room_info": new_room,
+    }
