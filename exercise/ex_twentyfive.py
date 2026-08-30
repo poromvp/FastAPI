@@ -15,6 +15,7 @@ from fastapi import (
     HTTPException,
     Request,
     status,
+    Cookie,
 )
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
@@ -57,12 +58,18 @@ class DeviceFilter:
         self.type_filter = type_filter
 
 
-def get_token():
-    pass
+def get_token(session_token: Annotated[str | None, Cookie()] = None):
+    if not session_token:
+        raise HTTPException(status_code=401, detail="Vui long dang nhap (Thieu cookie)")
+    return session_token
 
 
-def verify_user():
-    pass
+def verify_user(token: Annotated[str | None, Depends(get_token)]):
+    if token != "super-iot-token":
+        raise HTTPException(
+            status_code=403, detail="token khong phai la super-iot-token"
+        )
+    return {"username": "home_owner"}
 
 
 @app.post("/test/")
