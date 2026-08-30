@@ -84,8 +84,8 @@ def verify_admin_key(
 
 
 app = FastAPI(
-    title="Smart Home IoT Hub", version="1.0", dependencies=[Depends(verify_admin_key)]
-)
+    title="Smart Home IoT Hub", version="1.0"
+)  # , dependencies=[Depends(verify_admin_key)])
 
 
 @app.post("/test/")
@@ -135,7 +135,7 @@ async def create_room(
     }
 
 
-@app.post("/devices/{device_id}/firmware")
+@app.post("/devices/{device_id}/firmware", tags=["IoT Devices"])
 async def update_firmware(
     device_id: Annotated[int, Path(..., ge=1, description="ID thiet bi can update")],
     version_name: Annotated[str, Form(description="Phien ban firmware, VD: v2.1.0")],
@@ -154,3 +154,15 @@ async def update_firmware(
         "filename": file_firmware.filename,
         "uploaded_by": current_user["username"],
     }
+
+
+@app.delete(
+    "/devices/{device_id}",
+    dependencies=[Depends(verify_admin_key)],
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["Admin Only"],
+)
+async def delete_device(
+    device_id: Annotated[int, Path(..., ge=1, description="ID thiet bi can delete")],
+):
+    pass
