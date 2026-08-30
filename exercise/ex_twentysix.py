@@ -6,3 +6,5 @@ from pydantic import BaseModel
 app = FastAPI()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+
+fake_users_db = {"admin": {"username": "admin", "password": "secret123"}}
