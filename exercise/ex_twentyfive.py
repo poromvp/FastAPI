@@ -16,6 +16,7 @@ from fastapi import (
     Request,
     status,
     Cookie,
+    Response,
 )
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
@@ -82,3 +83,15 @@ app = FastAPI(
 @app.post("/test/")
 async def testing_model(device: RoomCreate):
     return device
+
+
+@app.post("/login", tags=["Authentication"])
+async def authenticate_login(
+    response: Response,
+    username: Annotated[str, Form()],
+    password: Annotated[str, Form()],
+):
+    if username == "admin" and password == "123456":
+        response.set_cookie(key="session_token", value="super-iot-token")
+        return {"message": "Dang nhap thanh cong, Cookie da duoc thiet lap"}
+    raise HTTPException(status_code=400, detail="Sai username va password")
