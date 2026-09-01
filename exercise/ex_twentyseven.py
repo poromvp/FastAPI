@@ -33,3 +33,5 @@ def get_password_hash(password):
 SECRET_KEY = "day_la_mot_chuoi_bi_mat_cuc_ky_kho_doan"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
