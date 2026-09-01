@@ -17,3 +17,6 @@ class UserInDB(BaseModel):
     username: str
     email: str
     hashed_password: str
+
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
