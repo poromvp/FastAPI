@@ -35,3 +35,11 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+fake_users_db = {
+    "johndoe": {
+        "username": "johndoe",
+        "email": "johndoe@example.com",
+        "hashed_password": get_password_hash("secret123"),
+    }
+}
