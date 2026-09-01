@@ -51,3 +51,22 @@ def create_access_token(data: dict):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+
+@app.post("/token", response_model=Token)
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    user_dict = fake_users_db.get(form_data.username)
+
+    # Xác thực Username và Password
+    if not user_dict or not verify_password(
+        form_data.password, user_dict["hashed_password"]
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Sai tên đăng nhập hoặc mật khẩu",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    # Tạo Token
+    access_token = create_access_token(data={"sub": form_data.username})
+    return {"access_token": access_token, "token_type": "bearer"}
