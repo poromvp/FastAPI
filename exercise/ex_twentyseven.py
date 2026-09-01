@@ -91,3 +91,9 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         raise credentials_exception
 
     return UserInDB(**user_dict)
+
+
+@app.get("/users/me")
+async def read_users_me(current_user: UserInDB = Depends(get_current_user)):
+    # Ẩn password trước khi trả về
+    return {"username": current_user.username, "email": current_user.email}
