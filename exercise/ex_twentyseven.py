@@ -6,3 +6,14 @@ from passlib.context import CryptContext
 from jose import JWTError, jwt
 
 app = FastAPI()
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class UserInDB(BaseModel):
+    username: str
+    email: str
+    hashed_password: str
