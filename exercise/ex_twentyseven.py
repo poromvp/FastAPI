@@ -179,3 +179,8 @@ def require_admin(current_user: dict = Depends(get_current_user)):
     if current_user.get("role") != "admin":
         raise HTTPException(status_code=403, detail="Cần quyền Admin để thao tác")
     return current_user
+
+
+@app.post("/system/faiss-index")
+async def update_vector_db(admin_user: dict = Depends(require_admin)):
+    return {"message": "Đã cập nhật cơ sở dữ liệu Vector thành công!"}
