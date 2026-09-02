@@ -165,3 +165,11 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 @app.get("/users/me")
 async def read_users_me(current_user: dict = Depends(get_current_user)):
     return {"user_profile": current_user}
+
+
+@app.post("/chat/queries")
+async def chat_with_llm(prompt: str, current_user: dict = Depends(get_current_user)):
+    return {
+        "user": current_user.get("sub"),
+        "response": f"Đã truy xuất FAISS và trả lời cho: {prompt}",
+    }
