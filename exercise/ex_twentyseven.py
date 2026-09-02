@@ -97,3 +97,28 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 async def read_users_me(current_user: UserInDB = Depends(get_current_user)):
     # Ẩn password trước khi trả về
     return {"username": current_user.username, "email": current_user.email}
+
+
+class UserCreate(BaseModel):
+    username: str
+    password: str
+
+
+class UserInDB(BaseModel):
+    username: str
+    hashed_password: str
+    role: str = "user"
+
+
+# Cấu hình JWT & Hashing
+SECRET_KEY = "super-secret-key-rag"
+ALGORITHM = "HS256"
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")  # n) Cấu hình OAuth2
+
+# Fake DB (Mô phỏng bảng SQLite)
+fake_users_db = {
+    "admin": UserInDB(
+        username="admin", hashed_password=pwd_context.hash("123456"), role="admin"
+    )
+}
