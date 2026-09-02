@@ -160,3 +160,8 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
         raise HTTPException(status_code=401, detail="Token đã hết hạn")
     except JWTError:
         raise HTTPException(status_code=401, detail="Không thể xác thực token")
+
+
+@app.get("/users/me")
+async def read_users_me(current_user: dict = Depends(get_current_user)):
+    return {"user_profile": current_user}
