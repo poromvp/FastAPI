@@ -51,3 +51,6 @@ class UserInDB(BaseModel):
 #  "admin": true,
 #  "iat": 1516239022
 # }
+
+# JWT Signature Vetification
+# a-string-secret-at-least-256-bits-long
