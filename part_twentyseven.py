@@ -16,3 +16,8 @@ fake_users_db = dict(
         disable=False,
     )
 )
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
