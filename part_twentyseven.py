@@ -36,3 +36,10 @@ class User(BaseModel):
 
 class UserInDB(BaseModel):
     hashed_password: str
+
+
+# Decoded Header
+# {
+#  "alg": "HS256",
+#  "typ": "JWT"
+# }
