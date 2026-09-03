@@ -43,3 +43,11 @@ class UserInDB(BaseModel):
 #  "alg": "HS256",
 #  "typ": "JWT"
 # }
+
+# Decoded Payload
+# {
+#  "sub": "1234567890",
+#  "name": "John Doe",
+#  "admin": true,
+#  "iat": 1516239022
+# }
