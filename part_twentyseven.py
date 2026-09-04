@@ -34,7 +34,7 @@ class User(BaseModel):
     disable: bool = False
 
 
-class UserInDB(BaseModel):
+class UserInDB(User):
     hashed_password: str
 
 
