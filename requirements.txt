@@ -1,3 +1,4 @@
 pip install python-multipart
 pip install python-jose[cryptography]
-pip install passlib[bcrypt]
+pip install passlib[bcrypt]==1.7.4
+pip install bcrypt==4.0.1

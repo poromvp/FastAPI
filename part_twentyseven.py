@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from passlib.context import CryptContext
 
 app = FastAPI()
 
@@ -43,6 +44,25 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
+
+
+password = "Pentapping1234@"
+password_hashed = get_password_hash(password)
+print(f"Mat khau sau khi hashed {password_hashed}")
+while True:
+    password_input = input("Hay nhap mat khau de dang nhap vao he thong: ")
+    if verify_password(password_input, password_hashed):
+        print("xin chao, da dang nhap thanh cong")
+        break
+    else:
+        print("ban da nhap sai mat khau, hay thu lai!")
 
 # Decoded Header
 # {
