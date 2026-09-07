@@ -53,16 +53,16 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
-password = "Pentapping1234@"
-password_hashed = get_password_hash(password)
-print(f"Mat khau sau khi hashed {password_hashed}")
-while True:
-    password_input = input("Hay nhap mat khau de dang nhap vao he thong: ")
-    if verify_password(password_input, password_hashed):
-        print("xin chao, da dang nhap thanh cong")
-        break
-    else:
-        print("ban da nhap sai mat khau, hay thu lai!")
+# password = "Pentapping1234@"
+# password_hashed = get_password_hash(password)
+# print(f"Mat khau sau khi hashed {password_hashed}")
+# while True:
+#     password_input = input("Hay nhap mat khau de dang nhap vao he thong: ")
+#     if verify_password(password_input, password_hashed):
+#         print("xin chao, da dang nhap thanh cong")
+#         break
+#     else:
+#         print("ban da nhap sai mat khau, hay thu lai!")
 
 # Decoded Header
 # {
