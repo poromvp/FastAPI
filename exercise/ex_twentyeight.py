@@ -54,3 +54,26 @@ class ProcessTimeMiddleware(BaseHTTPMiddleware):
 
 # Gắn class middleware vào ứng dụng
 app.add_middleware(ProcessTimeMiddleware)
+
+
+# ==========================================
+# NHÓM 3: MIDDLEWARE DẠNG HÀM (Bài h, i)
+# ==========================================
+@app.middleware("http")
+async def log_and_filter_requests(request: Request, call_next):
+    # h) Ghi log request tới
+    print(f"[LOG] Đang xử lý: {request.method} {request.url}")
+
+    # i) Đánh chặn Request nếu có dấu hiệu xấu (Ví dụ: header X-Banned-IP)
+    if "x-banned-ip" in request.headers:
+        print("[CẢNH BÁO] Phát hiện IP bị cấm. Đã chặn request!")
+        # Trả về lỗi trực tiếp mà KHÔNG gọi call_next (route bên dưới sẽ không được chạy)
+        return JSONResponse(
+            status_code=403,
+            content={"detail": "Bạn không có quyền truy cập hệ thống này."},
+        )
+
+    # Nếu bình thường, cho phép request đi tiếp
+    response = await call_next(request)
+
+    return response
