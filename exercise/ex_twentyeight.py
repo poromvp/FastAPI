@@ -29,3 +29,28 @@ app.add_middleware(
         "Authorization",
     ],  # c) Giới hạn header
 )
+
+
+# ==========================================
+# NHÓM 2: MIDDLEWARE DẠNG CLASS (Bài e, f, g)
+# ==========================================
+# Đây là cách làm hướng dẫn trong video part 28
+class ProcessTimeMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        # f) Bắt đầu bấm giờ
+        start_time = time.time()
+
+        # Chuyển request đi tiếp đến các middleware khác hoặc hàm xử lý (route)
+        response = await call_next(request)
+
+        # Tính toán thời gian xử lý
+        process_time = time.time() - start_time
+
+        # g) Thêm thông tin vào Header của Response trả về cho Client
+        response.headers["X-Process-Time"] = f"{process_time:.4f} giây"
+
+        return response
+
+
+# Gắn class middleware vào ứng dụng
+app.add_middleware(ProcessTimeMiddleware)
