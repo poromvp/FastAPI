@@ -77,3 +77,22 @@ async def log_and_filter_requests(request: Request, call_next):
     response = await call_next(request)
 
     return response
+
+
+# ==========================================
+# NHÓM 4: ENDPOINTS ĐỂ TEST (Bài j)
+# ==========================================
+
+
+@app.get("/api/data", tags=["Dashboard"])
+async def get_chart_data():
+    """Endpoint mô phỏng lấy dữ liệu dashboard"""
+    # Dừng 0.1 giây để test X-Process-Time hiển thị rõ hơn
+    time.sleep(0.1)
+    return {"sales": 1500, "visitors": 3200, "status": "Good"}
+
+
+@app.post("/api/reports", tags=["Dashboard"])
+async def create_report(payload: dict):
+    """Endpoint tạo báo cáo"""
+    return {"message": "Báo cáo đã được tạo", "received_data": payload}
