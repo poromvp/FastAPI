@@ -25,3 +25,16 @@ class Message(Base):
     content = Column(String)
     session_id = Column(Integer, ForeignKey("chat_sessions.id"))
     session = relationship("ChatSession", back_populates="messages")
+
+
+# c) schemas.py
+class MessageCreate(BaseModel):
+    content: str
+
+
+class MessageOut(BaseModel):
+    id: int
+    content: str
+
+    class Config:
+        orm_mode = True  # Quan trọng để đọc ORM model
