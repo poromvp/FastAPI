@@ -47,3 +47,21 @@ def create_message(db: Session, session_id: int, msg: MessageCreate):
     db.commit()
     db.refresh(db_msg)
     return db_msg
+
+
+# e) main.py
+Base.metadata.create_all(bind=engine)
+app = FastAPI()
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@app.post("/sessions/{session_id}/messages", response_model=MessageOut)
+def add_message(session_id: int, message: MessageCreate, db: Session = Depends(get_db)):
+    return create_message(db=db, session_id=session_id, msg=message)
