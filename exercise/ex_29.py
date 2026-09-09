@@ -9,3 +9,19 @@ engine = create_engine(
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
+
+# b) models.py
+class ChatSession(Base):
+    __tablename__ = "chat_sessions"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, index=True)
+    messages = relationship("Message", back_populates="session")
+
+
+class Message(Base):
+    __tablename__ = "messages"
+    id = Column(Integer, primary_key=True, index=True)
+    content = Column(String)
+    session_id = Column(Integer, ForeignKey("chat_sessions.id"))
+    session = relationship("ChatSession", back_populates="messages")
