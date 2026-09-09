@@ -76,3 +76,53 @@ engine = create_engine(
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
+
+# ==========================================
+# 2. SQLALCHEMY MODELS (models.py)
+# ==========================================
+class Category(Base):
+    __tablename__ = "categories"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    dishes = relationship("Dish", back_populates="category")
+
+
+class Dish(Base):
+    __tablename__ = "dishes"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    price = Column(Float)
+    category_id = Column(Integer, ForeignKey("categories.id"))
+
+    category = relationship("Category", back_populates="dishes")
+
+
+# ==========================================
+# 3. PYDANTIC SCHEMAS (schemas.py)
+# ==========================================
+class DishCreate(BaseModel):
+    name: str
+    price: float
+    category_id: int
+
+
+class DishOut(BaseModel):
+    id: int
+    name: str
+    price: float
+    category_id: int
+
+    class Config:
+        orm_mode = True  # Cực kỳ quan trọng để Pydantic đọc được dữ liệu từ SQLAlchemy
+
+
+# ==========================================
+# 4. CRUD OPERATIONS (crud.py)
+# ==========================================
+def create_dish(db: Session, dish: DishCreate):
+    db_dish = Dish(name=dish.name, price=dish.price, category_id=dish.category_id)
+    db.add(db_dish)
+    db.commit()
+    db.refresh(db_dish)
+    return db_dish
