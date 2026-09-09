@@ -65,3 +65,14 @@ def get_db():
 @app.post("/sessions/{session_id}/messages", response_model=MessageOut)
 def add_message(session_id: int, message: MessageCreate, db: Session = Depends(get_db)):
     return create_message(db=db, session_id=session_id, msg=message)
+
+
+# ==========================================
+# 1. DATABASE SETUP (database.py)
+# ==========================================
+SQLALCHEMY_DATABASE_URL = "sqlite:///./bay_van_menu.db"
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
