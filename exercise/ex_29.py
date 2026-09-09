@@ -126,3 +126,24 @@ def create_dish(db: Session, dish: DishCreate):
     db.commit()
     db.refresh(db_dish)
     return db_dish
+
+
+# ==========================================
+# 5. FASTAPI APP & ENDPOINTS (main.py)
+# ==========================================
+Base.metadata.create_all(bind=engine)  # Lệnh này tự động tạo file .db và các bảng
+app = FastAPI()
+
+
+# Dependency cấp phát session DB
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@app.post("/dishes/", response_model=DishOut)
+def add_new_dish(dish: DishCreate, db: Session = Depends(get_db)):
+    return create_dish(db=db, dish=dish)
