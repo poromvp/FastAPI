@@ -38,3 +38,12 @@ class MessageOut(BaseModel):
 
     class Config:
         orm_mode = True  # Quan trọng để đọc ORM model
+
+
+# d) crud.py
+def create_message(db: Session, session_id: int, msg: MessageCreate):
+    db_msg = Message(content=msg.content, session_id=session_id)
+    db.add(db_msg)
+    db.commit()
+    db.refresh(db_msg)
+    return db_msg
