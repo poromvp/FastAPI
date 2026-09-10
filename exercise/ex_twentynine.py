@@ -65,3 +65,6 @@ def get_db():
 @app.post("/sessions/{session_id}/messages", response_model=MessageOut)
 def add_message(session_id: int, message: MessageCreate, db: Session = Depends(get_db)):
     return create_message(db=db, session_id=session_id, msg=message)
+
+
+# co-rag
