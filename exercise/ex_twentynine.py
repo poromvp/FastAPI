@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+
+# from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship, Session
 from pydantic import BaseModel
 
