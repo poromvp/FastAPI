@@ -1,0 +1,9 @@
+from fastapi import APIRouter
+
+# Khởi tạo APIRouter cho Users[cite: 1]
+router = APIRouter(prefix="/users", tags=["Users"])
+
+
+@router.get("/")
+async def read_users():
+    return [{"username": "alice"}, {"username": "bob"}]
