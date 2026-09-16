@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-# Khởi tạo APIRouter cho Users[cite: 1]
+# Khởi tạo APIRouter cho Users
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
