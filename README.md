@@ -18,7 +18,7 @@ Welcome to the **FastAPI** learning repository! This project serves as a persona
 - **Data Validation:** Pydantic
 - **Database Tooling:** SQLAlchemy (or preferred ORM)
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 Make sure you have Python and Git installed on your machine.
