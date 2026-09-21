@@ -1,6 +1,6 @@
 learn FastAPI, an external libary's Python
 
-readme_content = """# ⚡ FastAPI Learning Journey
+readme_content = """#  FastAPI Learning Journey
 
 Welcome to the **FastAPI** learning repository! This project serves as a personal sandbox for exploring and mastering [FastAPI](https://fastapi.tiangolo.com/), a modern, highly performant web framework for building RESTful APIs with Python.
 
