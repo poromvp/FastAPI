@@ -24,4 +24,4 @@ Welcome to the **FastAPI** learning repository! This project serves as a persona
 Make sure you have Python and Git installed on your machine.
 
 ### Installation
-1. Clone this repository:
+Clone this repository:
