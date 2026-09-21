@@ -11,7 +11,7 @@ Welcome to the **FastAPI** learning repository! This project serves as a persona
 - Explore database integrations (e.g., SQLAlchemy) and authentication mechanisms (e.g., JWT, OAuth2).
 - Establish a clean, scalable backend architecture suitable for future AI or mobile backend integrations.
 
-## 🛠️ Tech Stack
+## Tech Stack
 - **Language:** Python 3.9+
 - **Framework:** FastAPI
 - **Server:** Uvicorn
