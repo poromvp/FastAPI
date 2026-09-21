@@ -4,7 +4,7 @@ readme_content = """#  FastAPI Learning Journey
 
 Welcome to the **FastAPI** learning repository! This project serves as a personal sandbox for exploring and mastering [FastAPI](https://fastapi.tiangolo.com/), a modern, highly performant web framework for building RESTful APIs with Python.
 
-## 🎯 Project Goals
+## Project Goals
 - Understand the core concepts of FastAPI and asynchronous programming in Python.
 - Build robust APIs with automatic interactive documentation (Swagger UI & ReDoc).
 - Implement data validation and serialization using **Pydantic**.
