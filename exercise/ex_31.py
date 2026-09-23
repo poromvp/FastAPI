@@ -60,3 +60,12 @@ async def send_user_notification(
         "user_id": user_id,
         "status": "Accepted",
     }
+
+
+LOG_FILE = "tasks_log.txt"
+
+
+def write_log(message: str):
+    """Hàm phụ trợ ghi thông tin tác vụ vào file."""
+    with open(LOG_FILE, mode="a", encoding="utf-8") as f:
+        f.write(f"{message}\n")
