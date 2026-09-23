@@ -69,3 +69,8 @@ def write_log(message: str):
     """Hàm phụ trợ ghi thông tin tác vụ vào file."""
     with open(LOG_FILE, mode="a", encoding="utf-8") as f:
         f.write(f"{message}\n")
+
+
+def send_welcome_email(email: str):
+    time.sleep(3)  # Giả lập độ trễ kết nối SMTP server
+    write_log(f"[EMAIL] Đã gửi thư chào mừng đến địa chỉ: {email}")
