@@ -35,3 +35,20 @@ def track_request_ip(
     """
     background_tasks.add_task(write_ip_log, ip_address)
     return ip_address
+
+
+@app.post(
+    "/users/{user_id}/notify",
+    status_code=status.HTTP_202_ACCEPTED,  # Câu a: Trả về mã 202
+    tags=["Notifications"],
+)
+async def send_user_notification(
+    background_tasks: BackgroundTasks,  # Yêu cầu FastAPI cấp phát BackgroundTasks
+    user_id: int = Path(..., ge=1),
+    ip: str = Depends(track_request_ip),  # Câu e: Gọi Dependency
+):
+    """
+    Gửi thông báo cho người dùng.
+    API này trả về kết quả ngay lập tức nhờ ủy thác công việc cho Background Tasks.
+    """
+    action_desc = f"Sent push notification to device. (Requested from {ip})"
