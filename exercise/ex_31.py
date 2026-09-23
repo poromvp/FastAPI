@@ -24,3 +24,14 @@ def write_ip_log(ip: str):
 
     with open("audit_log.txt", mode="a", encoding="utf-8") as log_file:
         log_file.write(log_message)
+
+
+def track_request_ip(
+    background_tasks: BackgroundTasks, ip_address: str = "192.168.1.100"
+):
+    """
+    Dependency này nhận BackgroundTasks trực tiếp từ FastAPI.
+    Nó sẽ chèn thêm một tác vụ ghi log IP vào hàng đợi chạy ngầm.
+    """
+    background_tasks.add_task(write_ip_log, ip_address)
+    return ip_address
