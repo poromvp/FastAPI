@@ -16,3 +16,11 @@ def write_audit_log(action: str, user_id: int):
 
     with open("audit_log.txt", mode="a", encoding="utf-8") as log_file:
         log_file.write(log_message)
+
+
+def write_ip_log(ip: str):
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_message = f"[{timestamp}] SYSTEM: Request received from IP {ip}\n"
+
+    with open("audit_log.txt", mode="a", encoding="utf-8") as log_file:
+        log_file.write(log_message)
