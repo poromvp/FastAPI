@@ -1,5 +1,4 @@
-from fastapi import (
-    FastAPI, BackgroundTasks, Depends, Path, status
+from fastapi import FastAPI, BackgroundTasks, Depends, Path, status
 import time
 import datetime
 
