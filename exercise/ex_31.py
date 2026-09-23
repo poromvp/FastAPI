@@ -52,3 +52,11 @@ async def send_user_notification(
     API này trả về kết quả ngay lập tức nhờ ủy thác công việc cho Background Tasks.
     """
     action_desc = f"Sent push notification to device. (Requested from {ip})"
+    background_tasks.add_task(write_audit_log, action_desc, user_id)
+
+    # Người dùng nhận được JSON này tức thì, không cần đợi 3 giây
+    return {
+        "message": "Notification is being sent in the background",
+        "user_id": user_id,
+        "status": "Accepted",
+    }
