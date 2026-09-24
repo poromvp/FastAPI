@@ -124,3 +124,14 @@ async def register_user(
         "message": f"Tài khoản {user.username} đã được tạo. Các tác vụ thông báo đang chạy ngầm.",
         "client_tag": client_tag,
     }
+
+
+@app.post("/images/optimize", status_code=status.HTTP_202_ACCEPTED, tags=["Media"])
+async def process_image_optimization(
+    image_id: int, target_quality: str, background_tasks: BackgroundTasks
+):
+    background_tasks.add_task(optimize_image, image_id, target_quality)
+    return {
+        "message": f"Yêu cầu nén ảnh #{image_id} đã được tiếp nhận.",
+        "status": "Processing in background",
+    }
