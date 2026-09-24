@@ -147,3 +147,20 @@ async def checkout_order(order_id: int, background_tasks: BackgroundTasks):
         "order_id": order_id,
         "message": "Đơn hàng đã thanh toán thành công, hệ thống đang đồng bộ hóa đơn và kho.",
     }
+
+
+@app.post("/heavy-report", tags=["Reports"])
+async def trigger_heavy_report(data_points: int, background_tasks: BackgroundTasks):
+    if data_points > 10000:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=(
+                f"Tác vụ với {data_points} điểm dữ liệu quá nặng cho BackgroundTasks nội bộ. "
+                "Vui lòng tích hợp hàng đợi phân tán chuyên dụng (như Celery hoặc RQ)!"
+            ),
+        )
+
+    background_tasks.add_task(
+        write_log, f"[REPORT] Đã xuất báo cáo nhẹ với {data_points} dòng"
+    )
+    return {"message": "Báo cáo nhỏ đang được tạo trong nền."}
