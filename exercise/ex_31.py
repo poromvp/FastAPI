@@ -103,3 +103,8 @@ def audit_tracker(
     if client_tag:
         background_tasks.add_task(log_client_audit, client_tag)
     return client_tag
+
+
+class RegisterRequest(BaseModel):
+    email: EmailStr
+    username: str
