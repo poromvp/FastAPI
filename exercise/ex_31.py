@@ -94,3 +94,12 @@ def send_invoice_email(order_id: int):
 def update_inventory_analytics(order_id: int):
     time.sleep(1)
     write_log(f"[ANALYTICS] Kho hàng đã cập nhật dữ liệu thống kê cho đơn #{order_id}")
+
+
+def audit_tracker(
+    background_tasks: BackgroundTasks, client_tag: str | None = Header(default=None)
+):
+    """Dependency trích xuất Header và đẩy tác vụ audit vào hàng đợi nền."""
+    if client_tag:
+        background_tasks.add_task(log_client_audit, client_tag)
+    return client_tag
