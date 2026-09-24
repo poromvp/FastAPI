@@ -74,3 +74,8 @@ def write_log(message: str):
 def send_welcome_email(email: str):
     time.sleep(3)  # Giả lập độ trễ kết nối SMTP server
     write_log(f"[EMAIL] Đã gửi thư chào mừng đến địa chỉ: {email}")
+
+
+def log_client_audit(tag: str):
+    time.sleep(1)
+    write_log(f"[AUDIT] Ghi nhận request từ Client-Tag: {tag}")
