@@ -79,3 +79,8 @@ def send_welcome_email(email: str):
 def log_client_audit(tag: str):
     time.sleep(1)
     write_log(f"[AUDIT] Ghi nhận request từ Client-Tag: {tag}")
+
+
+def optimize_image(image_id: int, quality: str):
+    time.sleep(4)  # Giả lập thời gian nén ảnh
+    write_log(f"[MEDIA] Ảnh #{image_id} đã được nén về chất lượng '{quality}'")
