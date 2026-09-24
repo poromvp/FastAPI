@@ -84,3 +84,8 @@ def log_client_audit(tag: str):
 def optimize_image(image_id: int, quality: str):
     time.sleep(4)  # Giả lập thời gian nén ảnh
     write_log(f"[MEDIA] Ảnh #{image_id} đã được nén về chất lượng '{quality}'")
+
+
+def send_invoice_email(order_id: int):
+    time.sleep(2)
+    write_log(f"[INVOICE] Hóa đơn cho đơn hàng #{order_id} đã được gửi thành công")
