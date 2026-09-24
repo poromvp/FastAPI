@@ -89,3 +89,8 @@ def optimize_image(image_id: int, quality: str):
 def send_invoice_email(order_id: int):
     time.sleep(2)
     write_log(f"[INVOICE] Hóa đơn cho đơn hàng #{order_id} đã được gửi thành công")
+
+
+def update_inventory_analytics(order_id: int):
+    time.sleep(1)
+    write_log(f"[ANALYTICS] Kho hàng đã cập nhật dữ liệu thống kê cho đơn #{order_id}")
