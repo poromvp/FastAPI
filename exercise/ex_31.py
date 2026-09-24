@@ -135,3 +135,15 @@ async def process_image_optimization(
         "message": f"Yêu cầu nén ảnh #{image_id} đã được tiếp nhận.",
         "status": "Processing in background",
     }
+
+
+@app.post("/orders/checkout", status_code=status.HTTP_202_ACCEPTED, tags=["Orders"])
+async def checkout_order(order_id: int, background_tasks: BackgroundTasks):
+    # Hệ thống chạy lần lượt các tác vụ được gắn vào
+    background_tasks.add_task(send_invoice_email, order_id)
+    background_tasks.add_task(update_inventory_analytics, order_id)
+
+    return {
+        "order_id": order_id,
+        "message": "Đơn hàng đã thanh toán thành công, hệ thống đang đồng bộ hóa đơn và kho.",
+    }
