@@ -108,3 +108,19 @@ def audit_tracker(
 class RegisterRequest(BaseModel):
     email: EmailStr
     username: str
+
+
+@app.post("/register", status_code=status.HTTP_202_ACCEPTED, tags=["Auth"])
+async def register_user(
+    user: RegisterRequest,
+    background_tasks: BackgroundTasks,
+    client_tag: str | None = Depends(audit_tracker),
+):
+    # Đưa tác vụ gửi email vào nền
+    background_tasks.add_task(send_welcome_email, user.email)
+
+    return {
+        "status": "success",
+        "message": f"Tài khoản {user.username} đã được tạo. Các tác vụ thông báo đang chạy ngầm.",
+        "client_tag": client_tag,
+    }
